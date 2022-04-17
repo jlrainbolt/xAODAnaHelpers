@@ -113,6 +113,7 @@ void MetContainer::setTree(TTree *tree)
 void MetContainer::setBranches(TTree *tree)
 {
 
+
   if ( m_infoSwitch.m_metClus ) {
     setBranch(tree, "FinalClus",         &m_metFinalClus,      "F");
     setBranch(tree, "FinalClusPx",       &m_metFinalClusPx,    "F");
@@ -203,13 +204,13 @@ void MetContainer::setBranches(TTree *tree)
     setBranch(tree, "SoftTrkPhi",      &m_metSoftTrkPhi,     "F");
   }
 
-
   return;
 }
 
 
 void MetContainer::clear()
 {
+
   if ( m_infoSwitch.m_metClus ) {
     m_metFinalClus      = -999;
     m_metFinalClusPx    = -999;
@@ -274,35 +275,45 @@ void MetContainer::clear()
   return;
 }
 
-void MetContainer::FillMET( const xAOD::MissingETContainer* met) {
-
+void MetContainer::FillMET( const xAOD::MissingETContainer* met)
+{
 
   //if ( m_debug ) { Info("HelpTreeBase::FillMET()", "Filling MET info"); }
 
-  if ( m_infoSwitch.m_metClus ) {
-    const xAOD::MissingET* final_clus = *met->find("FinalClus"); // ("FinalClus" uses the calocluster-based soft terms, "FinalTrk" uses the track-based onleares)
-    m_metFinalClus      = final_clus->met() / m_units;
-    m_metFinalClusPx    = final_clus->mpx() / m_units;
-    m_metFinalClusPy    = final_clus->mpy() / m_units;
-    m_metFinalClusSumEt = final_clus->sumet() / m_units;
-    m_metFinalClusPhi   = final_clus->phi();
+  if ( m_infoSwitch.m_metClus )
+  {
+    const xAOD::MissingET* final_clus = (*met)["FinalClus"]; // ("FinalClus" uses the calocluster-based soft terms, "FinalTrk" uses the track-based onleares)
+    if(final_clus)
+    {
+     m_metFinalClus      = final_clus->met() / m_units;
+     m_metFinalClusPx    = final_clus->mpx() / m_units;
+     m_metFinalClusPy    = final_clus->mpy() / m_units;
+     m_metFinalClusSumEt = final_clus->sumet() / m_units;
+     m_metFinalClusPhi   = final_clus->phi();
     
-    if ( m_infoSwitch.m_sigClus ) {
+    if ( m_infoSwitch.m_sigClus )
+    {
       m_metFinalClusOverSqrtSumEt  = final_clus->auxdecor<double>("METOverSqrtSumET");
       m_metFinalClusOverSqrtHt     = final_clus->auxdecor<double>("METOverSqrtHT");
       m_metFinalClusSignificance   = final_clus->auxdecor<double>("Significance");
       m_metFinalClusSigDirectional = final_clus->auxdecor<double>("SigDirectional");
     }
     
-    if ( m_infoSwitch.m_sigResolutionClus ) {
+    if ( m_infoSwitch.m_sigResolutionClus )
+    {
       m_metFinalClusRho  = final_clus->auxdecor<double>("Rho");
       m_metFinalClusVarL = final_clus->auxdecor<double>("VarL");
       m_metFinalClusVarT = final_clus->auxdecor<double>("VarT");
     }
+    
+   }
   }
 
-  if ( m_infoSwitch.m_metTrk ) {
-    const xAOD::MissingET* final_trk = *met->find("FinalTrk"); // ("FinalClus" uses the calocluster-based soft terms, "FinalTrk" uses the track-based ones)
+  if ( m_infoSwitch.m_metTrk )
+  {
+    const xAOD::MissingET* final_trk = (*met)["FinalTrk"]; // ("FinalClus" uses the calocluster-based soft terms, "FinalTrk" uses the track-based ones)
+    if(final_trk)
+    {
     m_metFinalTrk       = final_trk->met() / m_units;
     m_metFinalTrkPx     = final_trk->mpx() / m_units;
     m_metFinalTrkPy     = final_trk->mpy() / m_units;
@@ -316,69 +327,102 @@ void MetContainer::FillMET( const xAOD::MissingETContainer* met) {
       m_metFinalTrkSigDirectional = final_trk->auxdecor<double>("SigDirectional");
     }
 
-    if ( m_infoSwitch.m_sigResolutionTrk ) {
+    if ( m_infoSwitch.m_sigResolutionTrk )
+    {
       m_metFinalTrkRho  = final_trk->auxdecor<double>("Rho");
       m_metFinalTrkVarL = final_trk->auxdecor<double>("VarL");
       m_metFinalTrkVarT = final_trk->auxdecor<double>("VarT");
     }
+   }
   }
 
-  if ( m_infoSwitch.m_refEle ) {
-    const xAOD::MissingET* ref_ele       = *met->find("RefEle");
-    m_metEle         		         = ref_ele->met() / m_units;
-    m_metEleSumEt    		         = ref_ele->sumet() / m_units;
-    m_metElePhi      		         = ref_ele->phi();
+  if ( m_infoSwitch.m_refEle )
+  {
+    const xAOD::MissingET* ref_ele       = (*met)["RefEle"];
+    if(ref_ele)
+    {
+     m_metEle         		         = ref_ele->met() / m_units;
+     m_metEleSumEt    		         = ref_ele->sumet() / m_units;
+     m_metElePhi      		         = ref_ele->phi();
+    }
   }
 
-  if ( m_infoSwitch.m_refGamma ) {
-    const xAOD::MissingET* ref_gamma     = *met->find("RefGamma");
-    m_metGamma             	         = ref_gamma->met() / m_units;
-    m_metGammaSumEt        	         = ref_gamma->sumet() / m_units;
-    m_metGammaPhi          	         = ref_gamma->phi();
+  if ( m_infoSwitch.m_refGamma )
+  {
+    const xAOD::MissingET* ref_gamma     = (*met)["RefGamma"];
+    if(ref_gamma)
+    {
+     m_metGamma             	         = ref_gamma->met() / m_units;
+     m_metGammaSumEt        	         = ref_gamma->sumet() / m_units;
+     m_metGammaPhi          	         = ref_gamma->phi();
+    }
   }
 
-  if ( m_infoSwitch.m_refTau ) {
-    const xAOD::MissingET* ref_tau  	 = *met->find("RefTau");
-    m_metTau             	    	 = ref_tau->met() / m_units;
-    m_metTauSumEt        	    	 = ref_tau->sumet() / m_units;
-    m_metTauPhi          	    	 = ref_tau->phi();
+  if ( m_infoSwitch.m_refTau )
+  {
+    const xAOD::MissingET* ref_tau  	 = (*met)["RefTau"];
+    if(ref_tau)
+    {
+     m_metTau             	    	 = ref_tau->met() / m_units;
+     m_metTauSumEt        	    	 = ref_tau->sumet() / m_units;
+     m_metTauPhi          	    	 = ref_tau->phi();
+    }
   }
 
-  if ( m_infoSwitch.m_refMuons ) {
-    const xAOD::MissingET* ref_muon  	 = *met->find("Muons");
-    m_metMuons             	     	 = ref_muon->met() / m_units;
-    m_metMuonsSumEt        	     	 = ref_muon->sumet() / m_units;
-    m_metMuonsPhi          	     	 = ref_muon->phi();
+  if ( m_infoSwitch.m_refMuons )
+  {
+    const xAOD::MissingET* ref_muon  	 = (*met)["Muons"];
+    if(ref_muon)
+    {
+     m_metMuons             	     	 = ref_muon->met() / m_units;
+     m_metMuonsSumEt        	     	 = ref_muon->sumet() / m_units;
+     m_metMuonsPhi          	     	 = ref_muon->phi();
+    }
   }
 
-  if ( m_infoSwitch.m_refJet ) {
-    const xAOD::MissingET* ref_jet  	 = *met->find("RefJet");
-    m_metJet             	     	 = ref_jet->met() / m_units;
-    m_metJetSumEt        	     	 = ref_jet->sumet() / m_units;
-    m_metJetPhi          	     	 = ref_jet->phi();
+  if ( m_infoSwitch.m_refJet )
+  {
+    const xAOD::MissingET* ref_jet  	 = (*met)["RefJet"];
+    if(ref_jet)
+    {
+     m_metJet             	     	 = ref_jet->met() / m_units;
+     m_metJetSumEt        	     	 = ref_jet->sumet() / m_units;
+     m_metJetPhi          	     	 = ref_jet->phi();
+    }
   }
 
-  if ( m_infoSwitch.m_refJetTrk ) {
-    const xAOD::MissingET* ref_jet_trk   = *met->find("RefJetTrk");
-    m_metJetTrk             	     	 = ref_jet_trk->met() / m_units;
-    m_metJetTrkSumEt        	     	 = ref_jet_trk->sumet() / m_units;
-    m_metJetTrkPhi          	     	 = ref_jet_trk->phi();
+  if ( m_infoSwitch.m_refJetTrk )
+  {
+    const xAOD::MissingET* ref_jet_trk   = (*met)["RefJetTrk"];
+    if(ref_jet_trk)
+    {
+     m_metJetTrk             	     	 = ref_jet_trk->met() / m_units;
+     m_metJetTrkSumEt        	     	 = ref_jet_trk->sumet() / m_units;
+     m_metJetTrkPhi          	     	 = ref_jet_trk->phi();
+    }
   }
 
-  if ( m_infoSwitch.m_softClus) {
-    const xAOD::MissingET* ref_soft_clus = *met->find("SoftClus");
-    m_metSoftClus            		 = ref_soft_clus->met() / m_units;
-    m_metSoftClusSumEt       		 = ref_soft_clus->sumet() / m_units;
-    m_metSoftClusPhi         		 = ref_soft_clus->phi();
+  if ( m_infoSwitch.m_softClus)
+  {
+    const xAOD::MissingET* ref_soft_clus = (*met)["SoftClus"];
+    if(ref_soft_clus)
+    {
+     m_metSoftClus            		 = ref_soft_clus->met() / m_units;
+     m_metSoftClusSumEt       		 = ref_soft_clus->sumet() / m_units;
+     m_metSoftClusPhi         		 = ref_soft_clus->phi();
+    }
   }
 
-  if ( m_infoSwitch.m_softTrk) {
-    const xAOD::MissingET* ref_soft_trk  = *met->find("PVSoftTrk");
-    m_metSoftTrk             		 = ref_soft_trk->met() / m_units;
-    m_metSoftTrkSumEt        		 = ref_soft_trk->sumet() / m_units;
-    m_metSoftTrkPhi          		 = ref_soft_trk->phi();
+  if ( m_infoSwitch.m_softTrk)
+  {
+    const xAOD::MissingET* ref_soft_trk  = (*met)["PVSoftTrk"];
+    if(ref_soft_trk)
+    {
+     m_metSoftTrk             		 = ref_soft_trk->met() / m_units;
+     m_metSoftTrkSumEt        		 = ref_soft_trk->sumet() / m_units;
+     m_metSoftTrkPhi          		 = ref_soft_trk->phi();
+    }
   }
-
 
   return;
 }

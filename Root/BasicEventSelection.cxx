@@ -36,6 +36,9 @@ ClassImp(BasicEventSelection)
 BasicEventSelection :: BasicEventSelection () :
     Algorithm("BasicEventSelection")
 {
+	
+	std::cout<<"in BasicEventSelection"<<std::endl;
+	
 }
 
 

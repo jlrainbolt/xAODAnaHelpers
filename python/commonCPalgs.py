@@ -24,6 +24,10 @@ def makeSequence (dataType) :
     from MuonAnalysisAlgorithms.MuonAnalysisSequence import makeMuonAnalysisSequence
     muonSequenceLoose = makeMuonAnalysisSequence( dataType, deepCopyOutput = True, shallowViewOutput = False,
                                                    workingPoint = 'Loose.NonIso', postfix = 'loose' )
+    
+    #alg = createAlgorithm( 'myalg', 'AnalysisAlg' )
+    #muonSequenceLoose.append ( alg, inputPropName = "muons" )
+    
     muonSequenceLoose.configure( inputName = 'Muons', outputName = 'AnalysisMuons_%SYS%' )
     algSeq += muonSequenceLoose
     

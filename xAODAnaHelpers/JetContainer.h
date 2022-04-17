@@ -52,6 +52,11 @@ namespace xAH {
       std::vector<std::vector<int> > *m_isTrigMatchedToChain;
       std::vector<std::string>       *m_listTrigChains;
       
+
+      std::vector<std::string> names_btagsf;
+      std::vector<int> *m_passDL1r77;
+      std::vector<std::vector<float> *> m_SF_DL1r77;
+
       // clean
       std::vector<float> *m_Timing;
       std::vector<float> *m_LArQuality;

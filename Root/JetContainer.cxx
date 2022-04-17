@@ -226,6 +226,7 @@ JetContainer::JetContainer(const std::string& name, const std::string& detailStr
   // flavorTag
   if( m_infoSwitch.m_flavorTag  || m_infoSwitch.m_flavorTagHLT  ) {
 
+    /*
     //m_MV1                               =new std::vector<float>();
     m_MV2c00                            =new std::vector<float>();
     m_MV2c10                            =new std::vector<float>();
@@ -235,6 +236,8 @@ JetContainer::JetContainer(const std::string& name, const std::string& detailStr
     m_MV2r                              =new std::vector<float>();
     m_MV2c20                            =new std::vector<float>();
     m_MV2c100                           =new std::vector<float>();
+    */
+    /*
     m_DL1                               =new std::vector<float>();
     m_DL1_pu                            =new std::vector<float>();
     m_DL1_pc                            =new std::vector<float>();
@@ -251,7 +254,9 @@ JetContainer::JetContainer(const std::string& name, const std::string& detailStr
     m_DL1rmu_pu                         =new std::vector<float>();
     m_DL1rmu_pc                         =new std::vector<float>();
     m_DL1rmu_pb                         =new std::vector<float>();
+    */
     m_DL1r                              =new std::vector<float>();
+    m_passDL1r77                        =new std::vector<int>();
     m_DL1r_pu                           =new std::vector<float>();
     m_DL1r_pc                           =new std::vector<float>();
     m_DL1r_pb                           =new std::vector<float>();
@@ -665,7 +670,8 @@ JetContainer::~JetContainer()
   // flavorTag
   if( m_infoSwitch.m_flavorTag  || m_infoSwitch.m_flavorTagHLT  ) {
     // flavorTag
-
+    
+    /*
     //delete m_MV1;
     delete m_MV2c00;
     delete m_MV2c10;
@@ -675,6 +681,8 @@ JetContainer::~JetContainer()
     delete m_MV2r;
     delete m_MV2c20;
     delete m_MV2c100;
+    */
+    /*
     delete m_DL1;
     delete m_DL1_pu;
     delete m_DL1_pc;
@@ -691,7 +699,9 @@ JetContainer::~JetContainer()
     delete m_DL1rmu_pu;
     delete m_DL1rmu_pc;
     delete m_DL1rmu_pb;
+    */
     delete m_DL1r;
+    delete m_passDL1r77;
     delete m_DL1r_pu;
     delete m_DL1r_pc;
     delete m_DL1r_pb;
@@ -977,6 +987,7 @@ void JetContainer::setTree(TTree *tree)
 
   if(m_infoSwitch.m_flavorTag || m_infoSwitch.m_flavorTagHLT)
     {
+      /*
       connectBranch<float>(tree,"MV2c00"                            ,&m_MV2c00);
       connectBranch<float>(tree,"MV2c10"                            ,&m_MV2c10);
       connectBranch<float>(tree,"MV2c10mu"                          ,&m_MV2c10mu);
@@ -985,6 +996,8 @@ void JetContainer::setTree(TTree *tree)
       connectBranch<float>(tree,"MV2r"                              ,&m_MV2r);
       connectBranch<float>(tree,"MV2c20"                            ,&m_MV2c20);
       connectBranch<float>(tree,"MV2c100"                           ,&m_MV2c100);
+      */
+      /*
       connectBranch<float>(tree,"DL1"                               ,&m_DL1      );
       connectBranch<float>(tree,"DL1_pu"                            ,&m_DL1_pu   );
       connectBranch<float>(tree,"DL1_pc"                            ,&m_DL1_pc   );
@@ -1001,7 +1014,11 @@ void JetContainer::setTree(TTree *tree)
       connectBranch<float>(tree,"DL1rmu_pu"                         ,&m_DL1rmu_pu);
       connectBranch<float>(tree,"DL1rmu_pc"                         ,&m_DL1rmu_pc);
       connectBranch<float>(tree,"DL1rmu_pb"                         ,&m_DL1rmu_pb);
+      */
       connectBranch<float>(tree,"DL1r"                              ,&m_DL1r     );
+      connectBranch<int>(tree,"passDL1r77"                          ,&m_passDL1r77   ); //custom variable I added
+      for(int i=0;i<names_btagsf.size();i++)
+       connectBranch<float>(tree,"SF_DL1r77_"+names_btagsf[i]       ,&m_SF_DL1r77[i] ); //custom variable I added
       connectBranch<float>(tree,"DL1r_pu"                           ,&m_DL1r_pu  );
       connectBranch<float>(tree,"DL1r_pc"                           ,&m_DL1r_pc  );
       connectBranch<float>(tree,"DL1r_pb"                           ,&m_DL1r_pb  );
@@ -1244,6 +1261,7 @@ void JetContainer::updateParticle(uint idx, Jet& jet)
   if(m_infoSwitch.m_flavorTag  || m_infoSwitch.m_flavorTagHLT)
     {
       if(m_debug) std::cout << "updating flavorTag " << std::endl;
+      	/*
       jet.MV2c00                    =m_MV2c00               ->at(idx);
       jet.MV2c10                    =m_MV2c10               ->at(idx);
       if(m_MV2c10mu)  jet.MV2c10mu  =m_MV2c10mu             ->at(idx);
@@ -1252,6 +1270,8 @@ void JetContainer::updateParticle(uint idx, Jet& jet)
       if(m_MV2r)      jet.MV2r      =m_MV2r                 ->at(idx);
       jet.MV2c20                    =m_MV2c20               ->at(idx);
       jet.MV2c100                   =m_MV2c100              ->at(idx);
+      */
+      /*
       if(m_DL1)       jet.DL1       =m_DL1                  ->at(idx);
       if(m_DL1_pu)    jet.DL1_pu    =m_DL1_pu               ->at(idx);
       if(m_DL1_pc)    jet.DL1_pc    =m_DL1_pc               ->at(idx);
@@ -1268,7 +1288,13 @@ void JetContainer::updateParticle(uint idx, Jet& jet)
       if(m_DL1rmu_pu) jet.DL1rmu_pu =m_DL1rmu_pu            ->at(idx);
       if(m_DL1rmu_pc) jet.DL1rmu_pc =m_DL1rmu_pc            ->at(idx);
       if(m_DL1rmu_pb) jet.DL1rmu_pb =m_DL1rmu_pb            ->at(idx);
+      */
       if(m_DL1r)      jet.DL1r      =m_DL1r                 ->at(idx);
+      if(m_passDL1r77) jet.passDL1r77 =m_passDL1r77         ->at(idx);
+      
+      for(int i=0;i<names_btagsf.size();i++)
+       if(m_SF_DL1r77[i]) jet.SF_DL1r77[i] =m_SF_DL1r77[i]->at(idx);
+      
       if(m_DL1r_pu)   jet.DL1r_pu   =m_DL1r_pu              ->at(idx);
       if(m_DL1r_pc)   jet.DL1r_pc   =m_DL1r_pc              ->at(idx);
       if(m_DL1r_pb)   jet.DL1r_pb   =m_DL1r_pb              ->at(idx);
@@ -1714,8 +1740,9 @@ void JetContainer::setBranches(TTree *tree)
     setBranch<std::vector<float> >(tree,"constituent_e",      m_constituent_e     );
   }
 
-  if( m_infoSwitch.m_flavorTag  || m_infoSwitch.m_flavorTagHLT  ) {
-
+  if( m_infoSwitch.m_flavorTag  || m_infoSwitch.m_flavorTagHLT  )
+  {
+    /*
     setBranch<float>(tree,"MV2c00",    m_MV2c00);
     setBranch<float>(tree,"MV2c10",    m_MV2c10);
     setBranch<float>(tree,"MV2c10mu",  m_MV2c10mu);
@@ -1724,6 +1751,8 @@ void JetContainer::setBranches(TTree *tree)
     setBranch<float>(tree,"MV2r",      m_MV2r);
     setBranch<float>(tree,"MV2c20",    m_MV2c20);
     setBranch<float>(tree,"MV2c100",   m_MV2c100);
+    */
+    /*
     setBranch<float>(tree,"DL1",       m_DL1);
     setBranch<float>(tree,"DL1_pu",    m_DL1_pu);
     setBranch<float>(tree,"DL1_pc",    m_DL1_pc);
@@ -1740,7 +1769,11 @@ void JetContainer::setBranches(TTree *tree)
     setBranch<float>(tree,"DL1rmu_pu",  m_DL1rmu_pu);
     setBranch<float>(tree,"DL1rmu_pc",  m_DL1rmu_pc);
     setBranch<float>(tree,"DL1rmu_pb",  m_DL1rmu_pb);
+    */
     setBranch<float>(tree,"DL1r",    m_DL1r);
+    setBranch<int>(tree,"passDL1r77",    m_passDL1r77);
+    for(int i=0;i<names_btagsf.size();i++)
+     setBranch<float>(tree,"SF_DL1r77_"+names_btagsf[i], m_SF_DL1r77[i]);
     setBranch<float>(tree,"DL1r_pu", m_DL1r_pu);
     setBranch<float>(tree,"DL1r_pc", m_DL1r_pc);
     setBranch<float>(tree,"DL1r_pb", m_DL1r_pb);
@@ -2133,8 +2166,9 @@ void JetContainer::clear()
   }
 
   // flavor tag
-  if ( m_infoSwitch.m_flavorTag || m_infoSwitch.m_flavorTagHLT  ) {
-
+  if ( m_infoSwitch.m_flavorTag || m_infoSwitch.m_flavorTagHLT  )
+  {
+    /*
     m_MV2c00                            ->clear();
     m_MV2c10                            ->clear();
     m_MV2c10mu                          ->clear();
@@ -2143,6 +2177,8 @@ void JetContainer::clear()
     m_MV2r                              ->clear();
     m_MV2c20                            ->clear();
     m_MV2c100                           ->clear();
+    */
+    /*
     m_DL1                               ->clear();
     m_DL1_pu                            ->clear();
     m_DL1_pc                            ->clear();
@@ -2159,7 +2195,9 @@ void JetContainer::clear()
     m_DL1rmu_pu                         ->clear();
     m_DL1rmu_pc                         ->clear();
     m_DL1rmu_pb                         ->clear();
+    */
     m_DL1r                              ->clear();
+    m_passDL1r77                        ->clear();
     m_DL1r_pu                           ->clear();
     m_DL1r_pc                           ->clear();
     m_DL1r_pb                           ->clear();
@@ -2981,8 +3019,9 @@ void JetContainer::FillJet( const xAOD::IParticle* particle, const xAOD::Vertex*
 
     // MV2c taggers
     double val;
-
     val=-999;
+    
+    /*
     myBTag->variable<double>("MV2c00"   , "discriminant", val);
     m_MV2c00   ->push_back( val );
 
@@ -3011,11 +3050,14 @@ void JetContainer::FillJet( const xAOD::IParticle* particle, const xAOD::Vertex*
     val=-999;
     myBTag->variable<double>("MV2c100"  , "discriminant", val);
     m_MV2c100  ->push_back( val );
-
+    
+    */
+    
     // DL1 taggers
-    double pu, pb, pc, score;
-
+    float pu, pb, pc, score;
     pu=0; pb=0; pc=0;
+    
+    /*
     myBTag->variable<double>("DL1" , "pu", pu);
     myBTag->variable<double>("DL1" , "pc", pc);
     myBTag->variable<double>("DL1" , "pb", pb);
@@ -3064,6 +3106,28 @@ void JetContainer::FillJet( const xAOD::IParticle* particle, const xAOD::Vertex*
     m_DL1r_pc->push_back(pc);
     m_DL1r_pb->push_back(pb);
     m_DL1r->push_back( score );
+    */
+    
+    pu=0; pb=0; pc=0;
+    myBTag->variable<float>("DL1r" , "pu", pu);
+    myBTag->variable<float>("DL1r" , "pc", pc);
+    myBTag->variable<float>("DL1r" , "pb", pb);
+    score=log( pb / (0.03*pc+0.97*pu) );
+    m_DL1r_pu->push_back(pu);
+    m_DL1r_pc->push_back(pc);
+    m_DL1r_pb->push_back(pb);
+    m_DL1r->push_back( score );
+    
+    SG::AuxElement::Decorator< char > accBTag( "ftag_select_DL1r_FixedCutBEff_77" ); 
+    m_passDL1r77->push_back( static_cast<bool>(accBTag(*jet)) );
+    
+    for(int i=0;i<names_btagsf.size();i++)
+    {
+     SG::AuxElement::Decorator< float > accBTagSF("ftag_effSF_DL1r_FixedCutBEff_77_"+names_btagsf[i]);
+     m_SF_DL1r77[i]->push_back( static_cast<float>(accBTagSF(*jet)) );
+    }
+    
+
 
     // flavor groups truth definition
     static SG::AuxElement::ConstAccessor<int> hadConeExclTruthLabel("HadronConeExclTruthLabelID");

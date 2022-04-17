@@ -114,6 +114,8 @@ namespace xAH {
       float DL1rmu_pc;
       float DL1rmu_pb;
       float DL1r;
+      int   passDL1r77;
+      std::vector<float> SF_DL1r77;
       float DL1r_pu;
       float DL1r_pc;
       float DL1r_pb;

@@ -250,7 +250,8 @@ namespace HelperClasses{
   void ClusterInfoSwitch::initialize(){
   }
 
-  void JetInfoSwitch::initialize(){
+  void JetInfoSwitch::initialize()
+  {
     std::string tmpConfigStr; // temporary config string used to extract multiple values
 
     m_trigger       = has_exact("trigger");
@@ -279,7 +280,8 @@ namespace HelperClasses{
     m_allTrackDetail= has_exact("allTrackDetail");
     m_muonCorrection= has_exact("muonCorrection");
 
-    if( m_allTrackDetail ) {
+    if( m_allTrackDetail )
+    {
       m_allTrackPVSel = m_allTrackPVSel || has_exact("allTrackDetailPVSel") ;
     }
     m_constituent       = has_exact("constituent");
@@ -291,7 +293,8 @@ namespace HelperClasses{
     m_svDetails         = has_exact("svDetails");
     m_ipDetails         = has_exact("ipDetails");
 
-    if(has_match("tracksInJet")){
+    if(has_match("tracksInJet"))
+    {
       m_tracksInJet       = true;
       std::string input(m_configStr);
       // erase everything before the interesting string
@@ -305,14 +308,17 @@ namespace HelperClasses{
       input.erase(0,12);
 
       m_trackName = input;
-    }else{
+    }
+    else
+    {
       m_tracksInJet       = false;
       m_trackName         = "";
     }
 
 
     m_trackJetNames.clear();
-    if(has_match("trackJetName")){
+    if(has_match("trackJetName"))
+    {
       std::string input(m_configStr);
       // erase everything before the interesting string
       input.erase( 0, input.find("trackJetName") );
@@ -322,7 +328,7 @@ namespace HelperClasses{
       std::stringstream ss(input);
       std::string s;
       while(std::getline(ss, s, '_'))
-	m_trackJetNames.push_back(s);
+       m_trackJetNames.push_back(s);
     }
 
 
@@ -346,7 +352,10 @@ namespace HelperClasses{
     m_jetBTag.clear();
     m_jetBTagCts.clear();
     tmpConfigStr=std::string(m_configStr);
-    while( tmpConfigStr.find("jetBTag") != std::string::npos ) { // jetBTag
+    
+    while( tmpConfigStr.find("jetBTag") != std::string::npos )
+    {
+    	// jetBTag
       // erase everything before the interesting string
       tmpConfigStr.erase( 0, tmpConfigStr.find("jetBTag") );
       // extract interesting string
@@ -361,30 +370,38 @@ namespace HelperClasses{
       std::string tagger;
       std::string type;
       std::vector<uint> wps;
-      while(std::getline(ss, s, '_')) {
-	switch(idx)
-	  {
-	  case 0: // jetBTag
-	    break;
-	  case 1: // tagger
-	    tagger=s;
-	    break;
-	  case 2: // efficiency type
-	    type=s;
-	    break;
-	  case 3: // list of efficiency working points
-	    uint size( s.size()/2 );
-	    for(uint i=0;i<size;i++) {
-	      std::string number = s.substr(0,2);
-	      wps.push_back( atoi( number.c_str() ) );
-	      s.erase(0,2);
-	    }
-	  }
-	idx++;
-      }
-      if(m_jetBTag.find(tagger)==m_jetBTag.end()) m_jetBTag[tagger]=std::vector<std::pair<std::string,uint>>();
-      for(auto wp : wps)
-	m_jetBTag[tagger].push_back(std::make_pair(type,wp));
+      while(std::getline(ss, s, '_'))
+      {
+				switch(idx)
+	  		{
+	  			case 0: // jetBTag
+	    			break;
+	  			case 1: // tagger
+	    			tagger=s;
+	    			break;
+	  			case 2: // efficiency type
+	    			type=s;
+	    			break;
+	  			case 3: // list of efficiency working points
+	    			uint size( s.size()/2 );
+	    			for(uint i=0;i<size;i++)
+	    			{
+	      			std::string number = s.substr(0,2);
+	      			wps.push_back( atoi( number.c_str() ) );
+	      			s.erase(0,2);
+	    			}
+	  			}
+				idx++;
+      } //while
+      
+      if(m_jetBTag.find(tagger)==m_jetBTag.end())
+      	m_jetBTag[tagger]=std::vector<std::pair<std::string,uint>>();
+      
+     /* Jana hack
+     for(auto wp : wps)
+	    m_jetBTag[tagger].push_back(std::make_pair(type,wp));
+     */
+     m_jetBTag[tagger].push_back(std::make_pair("ftag_select_DL1r_FixedCutBEff",77));
 
       // Add the continuous tagger if this was the one that was passed
       if(type.find("Continuous")!=std::string::npos)
@@ -444,10 +461,10 @@ namespace HelperClasses{
   void METInfoSwitch::initialize(){
     m_metClus   = has_exact("metClus");
     m_metTrk    = has_exact("metTrk");
-    m_sigClus   = has_exact("sigClus")  || has_exact("all");
-    m_sigTrk    = has_exact("sigTrk")   || has_exact("all");
-    m_sigResolutionClus = has_exact("sigResolutionClus") || has_exact("all");
-    m_sigResolutionTrk  = has_exact("sigResolutionTrk")  || has_exact("all");
+    m_sigClus   = has_exact("sigClus");//  || has_exact("all");
+    m_sigTrk    = has_exact("sigTrk");//   || has_exact("all");
+    m_sigResolutionClus = has_exact("sigResolutionClus");// || has_exact("all");
+    m_sigResolutionTrk  = has_exact("sigResolutionTrk");//  || has_exact("all");
     m_refEle    = has_exact("refEle")   || has_exact("all");
     m_refGamma  = has_exact("refGamma") || has_exact("all");
     m_refTau    = has_exact("refTau")   || has_exact("all");

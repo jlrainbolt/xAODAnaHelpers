@@ -45,9 +45,16 @@ HelpTreeBase::HelpTreeBase(xAOD::TEvent* event, TTree* tree, TFile* file, const 
 
   // turn things off it this is data...since TStore is not a needed input
   // default isMC to true so more is added to the tree than less
+
+  std::cout<<"check1"<<std::endl;
+
   const xAOD::EventInfo* eventInfo(nullptr);
+  std::cout<<"check2"<<std::endl;
   HelperFunctions::retrieve(eventInfo, "EventInfo", m_event, m_store);
+  std::cout<<"check3"<<std::endl;
   m_isMC = ( eventInfo->eventType( xAOD::EventInfo::IS_SIMULATION ) );
+  std::cout<<"check4"<<std::endl;
+
 
 }
 
@@ -111,6 +118,7 @@ HelpTreeBase::HelpTreeBase(TTree* tree, TFile* file, xAOD::TEvent* event, xAOD::
   HelpTreeBase(event, tree, file, units, debug, store)
 {
   // use the other constructor for everything
+  
 }
 
 
