@@ -501,8 +501,6 @@ if __name__ == "__main__":
     for alg in configurator._algorithms:
       job.algsAdd(alg)
     
-    #job.outputAdd( ROOT.EL.OutputStream('Analysis') ) #HERE !!!
-    
     for configLog in configurator._log:
       # this is when we have just the algorithm name
       if len(configLog) == 2:
