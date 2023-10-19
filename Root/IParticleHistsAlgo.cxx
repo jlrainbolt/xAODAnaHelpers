@@ -10,6 +10,9 @@
 #include <xAODAnaHelpers/HelperFunctions.h>
 #include <xAODAnaHelpers/HelperClasses.h>
 
+#pragma GCC diagnostic push // ignore compiler warnings
+#pragma GCC diagnostic ignored "-Wunused-result"
+
 // this is needed to distribute the algorithm to the workers
 ClassImp(IParticleHistsAlgo)
 
@@ -89,3 +92,5 @@ EL::StatusCode IParticleHistsAlgo :: histFinalize () {
   ANA_CHECK( xAH::Algorithm::algFinalize());
   return EL::StatusCode::SUCCESS;
 }
+
+#pragma GCC diagnostic pop

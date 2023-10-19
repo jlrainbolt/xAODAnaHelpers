@@ -30,6 +30,9 @@
 #include "TrigConfxAOD/xAODConfigTool.h"
 #include "TrigDecisionTool/TrigDecisionTool.h"
 
+#pragma GCC diagnostic push // ignore compiler warnings
+#pragma GCC diagnostic ignored "-Wunused-result"
+
 // this is needed to distribute the algorithm to the workers
 ClassImp(HLTJetGetter)
 
@@ -186,3 +189,5 @@ EL::StatusCode HLTJetGetter :: histFinalize ()
     ANA_CHECK( xAH::Algorithm::algFinalize());
     return EL::StatusCode::SUCCESS;
 }
+
+#pragma GCC diagnostic pop

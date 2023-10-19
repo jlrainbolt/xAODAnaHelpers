@@ -5,6 +5,8 @@
 #include "xAODEventShape/EventShape.h"
 #include "xAODCaloEvent/CaloClusterContainer.h"
 
+#pragma GCC diagnostic push // ignore compiler warnings
+#pragma GCC diagnostic ignored "-Wunused-result"
 
 using namespace xAH;
 
@@ -456,3 +458,5 @@ void EventInfo::FillEvent( const xAOD::EventInfo* eventInfo, xAOD::TEvent* event
 
   return;
 }
+
+#pragma GCC diagnostic pop

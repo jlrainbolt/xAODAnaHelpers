@@ -10,6 +10,9 @@
 #include <xAODAnaHelpers/HelperFunctions.h>
 #include <xAODAnaHelpers/HelperClasses.h>
 
+#pragma GCC diagnostic push // ignore compiler warnings
+#pragma GCC diagnostic ignored "-Wunused-result"
+
 class IParticleHistsAlgo : public xAH::Algorithm
 {
   // put your configuration variables here as public variables.
@@ -147,5 +150,7 @@ public:
   /// @endcond
 
 };
+
+#pragma GCC diagnostic pop
 
 #endif

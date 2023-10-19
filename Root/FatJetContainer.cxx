@@ -3,6 +3,9 @@
 #include <iostream>
 #include "xAODTruth/TruthEventContainer.h"
 
+#pragma GCC diagnostic push // ignore compiler warnings
+#pragma GCC diagnostic ignored "-Wrange-loop-construct"
+
 using namespace xAH;
 
 FatJetContainer::FatJetContainer(const std::string& name, const std::string& detailStr, const std::string& subjetDetailStr, const std::string& suffix,
@@ -929,3 +932,4 @@ float FatJetContainer::GetEMFrac(const xAOD::Jet& jet) {
     return emfrac;
 }
 
+#pragma GCC diagnostic pop

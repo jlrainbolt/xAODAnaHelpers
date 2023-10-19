@@ -22,6 +22,9 @@
 
 #include "AsgMessaging/StatusCode.h"
 
+#pragma GCC diagnostic push // ignore compiler warnings
+#pragma GCC diagnostic ignored "-Wunused-result"
+
 using std::vector;
 
 // needed? should it be here?
@@ -1099,3 +1102,4 @@ void HelpTreeBase::ClearTruthVertices( const std::string& truthVertexName )
 
 }
 
+#pragma GCC diagnostic pop
