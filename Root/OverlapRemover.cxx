@@ -157,7 +157,7 @@ EL::StatusCode OverlapRemover :: initialize ()
   orFlags.linkOverlapObjects  = m_linkOverlapObjects;
   orFlags.bJetLabel           = m_bTagWP;
   orFlags.boostedLeptons      = m_useBoostedLeptons;
-  orFlags.doEleEleOR          = m_doEleEleOR;
+  orFlags.doEleEleOR          = m_doEleEleOR || m_lepFavWP;
 
   orFlags.doJets      = true;
   orFlags.doMuons     = m_useMuons;
@@ -168,6 +168,11 @@ EL::StatusCode OverlapRemover :: initialize ()
 
   ANA_CHECK( ORUtils::recommendedTools(orFlags, m_ORToolbox));
   if(m_applyRelPt) ANA_CHECK( m_ORToolbox.muJetORT.setProperty("ApplyRelPt", true) );
+  if (m_lepFavWP) {
+    ANA_CHECK( m_ORToolbox.eleEleORT.setProperty("UseClusterMatch", true) );
+    ANA_CHECK( m_ORToolbox.muJetORT.setProperty("OuterDR", 0.) );
+    ANA_CHECK( m_ORToolbox.eleJetORT.setProperty("OuterDR", 0.) );
+  }
   ANA_CHECK( m_ORToolbox.initialize());
   ANA_MSG_INFO( "OverlapRemover Interface succesfully initialized!" );
 
