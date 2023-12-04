@@ -3,6 +3,9 @@
 #include <sstream>
 #include <math.h>       /* hypot */
 
+#pragma GCC diagnostic push // ignore compiler warnings
+#pragma GCC diagnostic ignored "-Wunused-result"
+
 ANA_MSG_SOURCE(msgJetHists, "JetHists")
 
 using std::vector;
@@ -2010,3 +2013,5 @@ StatusCode JetHists::finalize() {
     }
     return IParticleHists::finalize();
 }
+
+#pragma GCC diagnostic pop

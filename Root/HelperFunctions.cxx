@@ -16,6 +16,10 @@
 #include <fastjet/tools/Filter.hh>
 #include <JetEDM/JetConstituentFiller.h>
 
+#pragma GCC diagnostic push // ignore compiler warnings
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#pragma GCC diagnostic ignored "-Wrange-loop-construct"
+
 void xAH::addRucio(SH::SampleHandler& sh, const std::string& name, const std::string& dslist)
 {
   std::unique_ptr<SH::SampleGrid> sample(new SH::SampleGrid(name));
@@ -543,3 +547,5 @@ HelperFunctions::ShowerType HelperFunctions::getMCShowerType(const std::string& 
   else if(tmp_name.Contains("SHERPA")) return Sherpa22;
   else return Unknown;
 }
+
+#pragma GCC diagnostic pop

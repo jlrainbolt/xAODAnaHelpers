@@ -26,6 +26,9 @@
 #include "xAODAnaHelpers/HelperClasses.h"
 #include "xAODAnaHelpers/TauEfficiencyCorrector.h"
 
+#pragma GCC diagnostic push // ignore compiler warnings
+#pragma GCC diagnostic ignored "-Wunused-result"
+
 using HelperClasses::ToolName;
 
 // this is needed to distribute the algorithm to the workers
@@ -439,3 +442,5 @@ EL::StatusCode TauEfficiencyCorrector :: executeSF ( const xAOD::EventInfo* /*ev
   
   return EL::StatusCode::SUCCESS;
 }
+
+#pragma GCC diagnostic pop

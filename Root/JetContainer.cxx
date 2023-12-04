@@ -5,6 +5,9 @@
 #include "xAODTruth/TruthEventContainer.h"
 #include "xAODBTagging/BTaggingUtilities.h"
 
+#pragma GCC diagnostic push // ignore compiler warnings
+#pragma GCC diagnostic ignored "-Wunused-result"
+
 using namespace xAH;
 
 JetContainer::JetContainer(const std::string& name, const std::string& detailStr, float units, bool mc)
@@ -3752,3 +3755,5 @@ void JetContainer::FillJet( const xAOD::IParticle* particle, const xAOD::Vertex*
 
   return;
 }
+
+#pragma GCC diagnostic pop

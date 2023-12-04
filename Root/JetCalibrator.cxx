@@ -40,6 +40,9 @@
 // #include "JetTileCorrection/JetTileCorrectionTool.h"
 #include "METUtilities/METHelpers.h"
 
+#pragma GCC diagnostic push // ignore compiler warnings
+#pragma GCC diagnostic ignored "-Wunused-result"
+
 // this is needed to distribute the algorithm to the workers
 ClassImp(JetCalibrator)
 
@@ -666,3 +669,5 @@ EL::StatusCode JetCalibrator::initializeUncertaintiesTool(asg::AnaToolHandle<ICP
 
   return EL::StatusCode::SUCCESS;
 }
+
+#pragma GCC diagnostic pop

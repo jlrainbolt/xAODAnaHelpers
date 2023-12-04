@@ -35,6 +35,9 @@
 #include "TObjArray.h"
 #include "TObjString.h"
 
+#pragma GCC diagnostic push // ignore compiler warnings
+#pragma GCC diagnostic ignored "-Wunused-result"
+
 // this is needed to distribute the algorithm to the workers
 ClassImp(ElectronSelector)
 
@@ -1199,3 +1202,5 @@ int ElectronSelector :: passCuts( const xAOD::Electron* electron, const xAOD::Ve
 
   return 1;
 }
+
+#pragma GCC diagnostic pop

@@ -3,6 +3,9 @@
 #include <xAODTracking/TrackParticle.h>
 #include "xAODAnaHelpers/HelperFunctions.h"
 
+#pragma GCC diagnostic push // ignore compiler warnings
+#pragma GCC diagnostic ignored "-Wunused-result"
+
 ANA_MSG_SOURCE(msgTracksInJetHists, "TracksInJetHists")
 
 TracksInJetHists :: TracksInJetHists (std::string name, std::string detailStr) :
@@ -137,3 +140,5 @@ float TracksInJetHists::getZ0Sign(const xAOD::TrackParticle* trk, const xAOD::Je
   float signZ0 = (trk_z0_wrtPV*dEta) > 0 ? 1.0 : -1.0;
   return signZ0;
 }
+
+#pragma GCC diagnostic pop

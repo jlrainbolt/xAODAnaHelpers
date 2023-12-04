@@ -36,6 +36,9 @@
 #include "xAODAnaHelpers/HelperFunctions.h"
 #include "xAODAnaHelpers/HelperClasses.h"
 
+#pragma GCC diagnostic push // ignore compiler warnings
+#pragma GCC diagnostic ignored "-Wunused-result"
+
 using HelperClasses::ToolName;
 
 // this is needed to distribute the algorithm to the workers
@@ -1146,3 +1149,5 @@ EL::StatusCode OverlapRemover :: setCounters( )
 
   return EL::StatusCode::SUCCESS;
 }
+
+#pragma GCC diagnostic pop
