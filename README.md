@@ -1,8 +1,8 @@
-# Important
+# Note about this branch
 
 This branch started as a duplicate of [UCATLAS/xAODAnaHelpers](https://github.com/UCATLAS/xAODAnaHelpers) commit [ce9087d](https://github.com/UCATLAS/xAODAnaHelpers/commit/ce9087da2b5aecbefa34a1323b76c091708b5519)
 
-===
+---
 
 # xAODAnaHelpers (xAH)
 
