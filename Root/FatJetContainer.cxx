@@ -715,7 +715,7 @@ void FatJetContainer::FillFatJet( const xAOD::IParticle* particle, int pvLocatio
     if( acc_GhostTrackCount.isAvailable( *fatjet ) ) {
       m_nTracks->push_back( acc_GhostTrackCount( *fatjet ));
     } else { m_nTracks->push_back(-999); }
-
+/*
     static SG::AuxElement::ConstAccessor<ElementLink<xAOD::JetContainer>> acc_parent("Parent");
     if (acc_parent.isAvailable(*fatjet)) {
       ElementLink<xAOD::JetContainer> fatjetParentLink = acc_parent(*fatjet);
@@ -748,7 +748,7 @@ void FatJetContainer::FillFatJet( const xAOD::IParticle* particle, int pvLocatio
     if( acc_nChargedParticles.isAvailable( *fatjet ) ) {
       m_nChargedParticles->push_back( acc_nChargedParticles( *fatjet ));
     } else { m_nChargedParticles->push_back(-999); }
-
+*/
   }
 
   if ( m_infoSwitch.m_ntrimsubjets && !m_infoSwitch.m_substructure ){
